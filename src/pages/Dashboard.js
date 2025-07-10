@@ -62,9 +62,9 @@ function Dashboard() {
     // Inicializar rutas por defecto
     useEffect(() => {
         setRoutes([
-            { id: 1, name: 'RUTA 25' },
-            { id: 2, name: 'RUTA 50' },
-            { id: 3, name: 'RUTA 50-B' }
+            { id: 1, name: 'RUTA 43' },
+            { id: 2, name: 'RUTA 8' },
+            { id: 3, name: 'RUTA 37' }
         ]);
     }, []);
     useEffect(() => {

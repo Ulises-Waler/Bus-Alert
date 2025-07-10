@@ -76,7 +76,7 @@ function MapPage() {
 
   // Cargar paradas de autobús (opcional)
   const loadBusStops = useCallback(() => {
-    axios.get('https://busalert-backend.onrender.com/api/busstops')
+    axios.get('https://busalert-backend.onrender.com/api/stops')
       .then(response => {
         setStops(response.data);
       })
