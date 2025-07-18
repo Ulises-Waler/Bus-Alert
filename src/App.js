@@ -9,7 +9,6 @@ import RegisterPaymentMethod from './pages/RegisterPaymentMethod';
 import NotificationsPage from './pages/NotificationsPage';
 import PagarPasaje from './pages/PagarPasaje';
 import ChatbotPage from './pages/ChatbotPage';
-
 function App() {
   return (
       <Routes>

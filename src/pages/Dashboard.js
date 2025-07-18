@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleMap, LoadScript, MarkerF, Autocomplete } from '@react-google-maps/api';
 import { FiBell } from 'react-icons/fi'; // Usamos react-icons para el ícono de la campanita
-import { Button } from 'react-bootstrap';
-import "./Dashboard.css";
+import { Navbar, Nav, Container, Button, NavDropdown, Card, Row, Col } from 'react-bootstrap';
+import "./Dashboard.css"
 
 
 function Dashboard() {
@@ -26,7 +26,7 @@ function Dashboard() {
         width: '100%',
         height: '400px',
     };
-    
+
 
     const center = { lat: 21.8818, lng: -102.2917 };
 
@@ -131,96 +131,162 @@ function Dashboard() {
     };
 
     return (
-        <div className="container">
+        <Container className='mb-4'>
 
-            <h1 className='Bienvenida'>Bienvenido al Dashboard</h1>
-            <Button className='button-recargar' onClick={() => navigate('/recargar-tarjeta')}>Recargar Tarjeta</Button>
-            <Button className='button-registrar' onClick={() => navigate('/registrar-tarjeta')}>Registrar Tarjeta</Button>
-
-            {/* Botón para registrar método de recarga */}
-            <Button className='button-metodo' onClick={handleRegisterPaymentMethod}>Registrar Método de Recarga</Button>
-
-
-
-
-
-            <Button className='button-pagar' onClick={() => navigate('/pagar-pasaje')}>Pagar Pasaje</Button>
-            <Button className='button-chat' onClick={() => navigate('/chatbot')} style={{ marginTop: '10px' }}>
-                Chatbot de Soporte
-            </Button>
-            <Button onClick={handleNotificationsRedirect} style={{ position: 'relative' }}>
-                <FiBell size={30} />
-                {notifications > 0 && (
-                    <div
-                        style={{
-                            position: 'absolute',
-                            top: '-5px',
-                            right: '-5px',
-                            backgroundColor: 'red',
-                            color: 'white',
-                            borderRadius: '50%',
-                            padding: '5px 10px',
-                            fontSize: '14px',
-                        }}
-                    >
-                        {notifications}
-                    </div>
-                )}
-            </Button>
-            <Button className='button-cerrar' variant="danger" onClick={() => navigate('/')}>Cerrar sesión</Button>
-
-
-            <h2 className='ATD'>A Dónde Te Diriges?</h2>
-            <LoadScript googleMapsApiKey="AIzaSyDkCXkdamNXTN3uZyM_7o7sWobnf-Ml6mA" libraries={libraries}>
-                <Autocomplete onLoad={(ref) => (autocompleteRef.current = ref)} onPlaceChanged={handlePlaceSelect}>
-                    <input
-                        type="text"
-                        placeholder="Buscar dirección..."
-                        style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
-                    />
-                </Autocomplete>
-
-                <div>
-                    <h3 className='ubicacion-rutas'>Las siguientes rutas pasan por tu ubicación actual</h3>
-                    <h3 className='elegir-ruta'>Cual deseas elegir?</h3>
-                    <ul>
-                        {routes.map((route) => (
-                            <li key={route.id}>
-                                <button className='button-ruta' onClick={() => handleRouteSelect(route)}>{route.name}</button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <h3 className='hora'>Hora actual: {formatTime(currentTime)}</h3>
-                <p style={{ fontSize: '18px', fontWeight: 'bold', color: alerta.includes('⚠️') ? 'red' : 'green' }}>{alerta}</p>
-                <button
-                    className='button-seleccionar'
-                    onClick={() => navigate('/map', { state: { destination: searchLocation } })}
-                >
-                    Seleccionar
-                </button>
-                <GoogleMap mapContainerStyle={mapContainerStyle} center={currentLocation || center} zoom={14}>
-                    {currentLocation && (
-                        <MarkerF
-                            position={currentLocation}
-                            title="Ubicación actual"
+            <h1 className='Bienvenida'>Bienvenido a BusAlert</h1>
+            <Navbar className='mb-3'>
+                <Container className='container mb-3'>
+                    <Navbar.Brand className="d-flex align-items-center">
+                        <img
+                            alt="Logo"
+                            src="https://play-lh.googleusercontent.com/ovizBGXEudzac08Kgstry0-9z9fwvJ1tqb9y-ZttRz-3IieePYPvbQt9AZIIOgFNLA"
+                            width="40"
+                            height="40"
+                            className="d-inline-block align-top me-2 rounded-circle border"
+                            style={{ backgroundColor: "#ffffff", padding: "4px" }}
                         />
-                    )}
-                    {searchLocation && (
-                        <MarkerF
-                            position={searchLocation}
-                            title="Ubicación buscada"
-                            icon="http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
-                        />
-                    )}
-                    <MarkerF position={center} title="Ubicación predeterminada" />
-                </GoogleMap>
+                        <span className="fw-bold fs-4 text-primary">BusAlert Aguascalientes</span>
+                    </Navbar.Brand>
+
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link onClick={() => navigate('/recargar-tarjeta')} className="text-dark fw-semibold">
+                                Recargar Tarjeta
+                            </Nav.Link>
+                            <Nav.Link onClick={() => navigate('/registrar-tarjeta')} className="text-dark fw-semibold">
+                                Registrar Tarjeta
+                            </Nav.Link>
+                            <Nav.Link onClick={handleRegisterPaymentMethod} className="text-dark fw-semibold">
+                                Registrar Método
+                            </Nav.Link>
+                            <Nav.Link onClick={() => navigate('/pagar-pasaje')} className="text-dark fw-semibold">
+                                Pagar Pasaje
+                            </Nav.Link>
+                            <Nav.Link onClick={() => navigate('/chatbot')} className="text-dark fw-semibold">
+                                Chatbot
+                            </Nav.Link>
+                            <Nav.Link onClick={handleNotificationsRedirect} style={{ position: 'relative' }}>
+                                <FiBell size={20} className="text-primary" />
+                                {notifications > 0 && (
+                                    <span
+                                        style={{
+                                            position: 'absolute',
+                                            top: '0px',
+                                            right: '-8px',
+                                            backgroundColor: 'red',
+                                            color: 'white',
+                                            borderRadius: '50%',
+                                            padding: '2px 6px',
+                                            fontSize: '12px',
+                                        }}
+                                    >
+                                        {notifications}
+                                    </span>
+                                )}
+                            </Nav.Link>
+                        </Nav>
+                        <Nav>
+                            <Nav.Link onClick={() => navigate('/')} className="text-danger fw-bold">
+                                Cerrar Sesión
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+
+
+
+            <LoadScript
+                googleMapsApiKey="AIzaSyDkCXkdamNXTN3uZyM_7o7sWobnf-Ml6mA"
+                libraries={libraries}
+            >
+                <Card className="mb-4 shadow-sm border rounded     background-color:rgba(211, 222, 226, 0.8)">
+                    <Card.Body className='background-color:rgba(211, 222, 226, 0.8)'>
+                        <h4 className="text-primary mb-3 fw-bold">¿A dónde te diriges?</h4>
+
+                        {/* Barra de búsqueda de dirección */}
+                        <Autocomplete
+                            onLoad={(ref) => (autocompleteRef.current = ref)}
+                            onPlaceChanged={handlePlaceSelect}
+                        >
+                            <input
+                                type="text"
+                                placeholder="Buscar dirección..."
+                                className="form-control mb-3"
+                            />
+                        </Autocomplete>
+
+                        {/* Lista de rutas */}
+                        <div className="text-primary mb-3 fw-bold">
+                            <h5 className="fw-semibold">Rutas cercanas a tu ubicación</h5>
+                            <Row xs={2} md={3} lg={4} className="g-2">
+                                {routes.map((route) => (
+                                    <Col key={route.id}>
+                                        <Button
+                                            variant="outline-primary"
+                                            className="w-100"
+                                            onClick={() => handleRouteSelect(route)}
+                                        >
+                                            {route.name}
+                                        </Button>
+                                    </Col>
+                                ))}
+                            </Row>
+                        </div>
+
+                        {/* Hora y alerta */}
+                        <div className="mt-3">
+                            <h6 className="hora">Hora actual: {formatTime(currentTime)}</h6>
+                            <p
+                                style={{ fontSize: '18px', fontWeight: 'bold', color: alerta.includes('⚠️') ? 'red' : 'green' }}
+                            >
+                                {alerta}
+                            </p>
+                        </div>
+
+                        {/* Botón Seleccionar */}
+                        <Button
+                            variant="success"
+                            className="mt-3"
+                            onClick={() => navigate('/map', { state: { destination: searchLocation } })}
+                        >
+                            Seleccionar Destino
+                        </Button>
+                    </Card.Body>
+                </Card>
+
+                {/* Mapa de Google */}
+                <Card className="shadow-sm border rounded">
+                    <Card.Body>
+                        <h5 className="mb-3 text-primary fw-semibold">Mapa de Ubicación</h5>
+                        <div style={{ width: '100%', height: '400px' }}>
+                            <GoogleMap
+                                mapContainerStyle={{ width: '100%', height: '100%' }}
+                                center={currentLocation || center}
+                                zoom={14}
+                            >
+                                {currentLocation && (
+                                    <MarkerF position={currentLocation} title="Ubicación actual" />
+                                )}
+                                {searchLocation && (
+                                    <MarkerF
+                                        position={searchLocation}
+                                        title="Ubicación buscada"
+                                        icon="http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+                                    />
+                                )}
+                                <MarkerF position={center} title="Ubicación predeterminada" />
+                            </GoogleMap>
+                        </div>
+                    </Card.Body>
+                </Card>
             </LoadScript>
+
 
             {/* Mostrar las rutas por defecto */}
 
-        </div>
+        </Container>
     );
 }
 

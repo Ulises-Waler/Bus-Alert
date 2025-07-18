@@ -1,26 +1,23 @@
 .container-background {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    background-image: url("../images/backBus.jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    border-color: rgb(4, 0, 255);
+    background-color: #58a2de;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 900px;
+     background: linear-gradient(135deg, #330099, #33ccff);
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    
 }
 .card {
     border-color: rgb(4, 0, 255);
     border-radius: 10px;
     display: flex;
     justify-content: center;
-    align-items: center;
     background-color: #58a2de;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     /* Transición suave */
-    width: 320px;
     min-height: 200px;
-    background: linear-gradient(135deg, #330099, #33ccff);
+    background-color:rgba(211, 222, 226, 0.8);
     color: white;
     padding: 20px;
     border-radius: 15px;
@@ -98,4 +95,17 @@
 
 .button-link:hover {
     color: white; /* Cambia el color cuando el usuario pasa el mouse */
+}
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-image-wrapper {
+  padding: 8px; /* grosor del borde "coloreado" */
+  border-radius: 15px;
+  background: linear-gradient(135deg, #330099, #33ccff);
 }

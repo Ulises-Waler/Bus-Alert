@@ -3,15 +3,7 @@
 /* Contenedor principal */
 
 
-.container {
-    position: relative;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background-size: cover;
-    background-position: center;
-    background-color: #8e44ad;
 
-}
 
 .container::before { 
     content: "";
@@ -216,4 +208,8 @@ h3 {
         1px 1px 2px rgb(0, 200, 255),
  
         1px 1px 2px white;  
+}
+.nav-link:hover {
+  color: #0056b3 !important;
+  text-decoration: underline;
 }
