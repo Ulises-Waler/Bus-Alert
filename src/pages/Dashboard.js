@@ -134,8 +134,8 @@ function Dashboard() {
         <Container className='mb-4'>
 
             <h1 className='Bienvenida'>Bienvenido a BusAlert</h1>
-            <Navbar className='mb-3'>
-                <Container className='container mb-3'>
+            <Navbar expand="md" variant="light" className="mb-3 px-3 shadow-sm rounded">
+                <Container fluid className='container mb-3'>
                     <Navbar.Brand className="d-flex align-items-center">
                         <img
                             alt="Logo"

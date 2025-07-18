@@ -83,7 +83,7 @@ function Login() {
     <Container style={{ backgroundColor: 'rgba(211, 222, 226, 0.8)' }}>
       <Row >
         {/* Carrusel de imágenes */}
-        <Col md={6} className="d-none d-md-block p-0">
+        <Col xs={12} md={6} className="p-0 mb-3 mb-md-0">
           <Carousel fade controls={false} indicators={false}>
             <Carousel.Item className="px-3">
               <div className="carousel-image-wrapper">
