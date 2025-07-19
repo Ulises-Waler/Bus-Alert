@@ -50,14 +50,17 @@ function Dashboard() {
     const libraries = useMemo(() => ['places'], []);
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            const newTime = new Date();
-            setCurrentTime(newTime);
-            checkPeakHours(newTime.getHours());
-        }, 1000);
+    const timer = setInterval(() => {
+        const newTime = new Date();
+        setCurrentTime(newTime);
+    }, 1000); // Esto solo actualiza la hora en pantalla
 
-        return () => clearInterval(timer);
-    }, []);
+    return () => clearInterval(timer);
+}, []);
+
+useEffect(() => {
+    checkPeakHours(currentTime.getHours()); // Ejecuta la predicción solo cuando cambia la hora
+}, [currentTime.getHours()]);
 
     // Inicializar rutas por defecto
     useEffect(() => {
@@ -81,7 +84,19 @@ function Dashboard() {
         return () => clearInterval(notificationTimer);
     }, []);
 
-    const formatTime = (date) => date.toLocaleTimeString();
+    const formatTime = (date) => {
+    const options = {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    return date.toLocaleString('es-MX', options);
+};
 
     const checkPeakHours = (hour) => {
         setIsPredicting(true);
@@ -145,12 +160,12 @@ function Dashboard() {
                             className="d-inline-block align-top me-2 rounded-circle border"
                             style={{ backgroundColor: "#ffffff", padding: "4px" }}
                         />
-                        <span className="fw-bold fs-4 text-primary">BusAlert Aguascalientes</span>
+                        <span className="fw-bold fs-5 text-primary brand-text">BusAlert Aguascalientes</span>
                     </Navbar.Brand>
 
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" className="d-block d-md-none mx-auto mb-2" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
+                        <Nav className="me-auto text-center w-100 d-flex flex-column flex-md-row justify-content-center">
                             <Nav.Link onClick={() => navigate('/recargar-tarjeta')} className="text-dark fw-semibold">
                                 Recargar Tarjeta
                             </Nav.Link>
@@ -186,7 +201,7 @@ function Dashboard() {
                                 )}
                             </Nav.Link>
                         </Nav>
-                        <Nav>
+                        <Nav className="justify-content-center mt-2 mt-md-0">
                             <Nav.Link onClick={() => navigate('/')} className="text-danger fw-bold">
                                 Cerrar Sesión
                             </Nav.Link>
@@ -203,12 +218,30 @@ function Dashboard() {
             >
                 <Card className="mb-4 shadow-sm border rounded     background-color:rgba(211, 222, 226, 0.8)">
                     <Card.Body className='background-color:rgba(211, 222, 226, 0.8)'>
-                        <h4 className="text-primary mb-3 fw-bold">¿A dónde te diriges?</h4>
 
                         {/* Barra de búsqueda de dirección */}
+                            <div className="mt-3">
+                                <h6 className="hora">{formatTime(currentTime)}</h6>
+                                <p
+                                    style={{ fontSize: '18px', fontWeight: 'bold', color: alerta.includes('⚠️') ? 'red' : 'green' }}
+                                >
+                                    {alerta}
+                                </p>
+                            </div>
+                        <h4 className="text-primary mb-3 fw-bold">¿A dónde te diriges?</h4>
                         <Autocomplete
                             onLoad={(ref) => (autocompleteRef.current = ref)}
                             onPlaceChanged={handlePlaceSelect}
+                            options={{
+                                componentRestrictions: { country: 'mx' }, // Solo México
+                                bounds: {
+                                    north: 22.4,
+                                    south: 21.6,
+                                    east: -101.8,
+                                    west: -102.6,
+                                }, // Aproximadamente los límites del estado de Aguascalientes
+                                strictBounds: true, // Restringe solo dentro de los bounds
+                            }}
                         >
                             <input
                                 type="text"
@@ -236,14 +269,6 @@ function Dashboard() {
                         </div>
 
                         {/* Hora y alerta */}
-                        <div className="mt-3">
-                            <h6 className="hora">Hora actual: {formatTime(currentTime)}</h6>
-                            <p
-                                style={{ fontSize: '18px', fontWeight: 'bold', color: alerta.includes('⚠️') ? 'red' : 'green' }}
-                            >
-                                {alerta}
-                            </p>
-                        </div>
 
                         {/* Botón Seleccionar */}
                         <Button

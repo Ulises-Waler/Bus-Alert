@@ -94,6 +94,7 @@ function MapPage() {
   }, []);
 
   return (
+            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
     <Container>
       <h1>Mapa de Transporte</h1>
       <LoadScript googleMapsApiKey="AIzaSyDkCXkdamNXTN3uZyM_7o7sWobnf-Ml6mA" libraries={['places']}>
@@ -171,6 +172,7 @@ function MapPage() {
       )}
 
     </Container>
+    </div>
   );
 }
 

@@ -36,7 +36,11 @@
 
 
 /* Ajuste de los campos específicos */
-.number, .month, .year, .cvc, .email {
+.number,
+.month,
+.year,
+.cvc,
+.email {
     font-family: "Georgia", serif;
     font-size: 14px;
     font-weight: bold;
@@ -51,25 +55,43 @@
 }
 
 .payment-option {
-    width: 80px; /* Ajusta el tamaño del botón */
+    width: 80px;
+    /* Ajusta el tamaño del botón */
     height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #ccc;
+    border: 2px solid #ccc transparent;
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s ease;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 10px;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .payment-option img {
-    width: 50px; /* Ajusta el tamaño de la imagen */
+    width: 50px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Ajusta el tamaño de la imagen */
     height: auto;
 }
 
 .payment-option.selected {
-    border: 2px solid #007bff; /* Color azul cuando se selecciona */
-    background-color: rgba(0, 123, 255, 0.1);
+    border: 2px solid #007bff;
+    /* Color azul cuando se selecciona */
+     border-color: #0d6efd;
+  background-color: rgba(13, 110, 253, 0.1);
+}
+
+.payment-option:hover {
+  border-color: #0d6efd;
+  box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
+  background-color: rgba(13, 110, 253, 0.05);
 }
 
 
@@ -78,7 +100,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px; 
+    gap: 5px;
     margin-bottom: 20px;
 }
 
@@ -89,7 +111,7 @@
     margin-bottom: 3px;
 }
 
-.button-method{
+.button-method {
     font-family: "Georgia", serif;
     align-items: center;
 }
@@ -105,7 +127,8 @@
 
 .email-mercadopago {
     text-align: center;
-    color: rgb(10, 125, 230); /* Azul similar a Mercado Pago */
+    color: rgb(10, 125, 230);
+    /* Azul similar a Mercado Pago */
     font-weight: bold;
     font-size: 16px;
     margin-bottom: 5px;
@@ -114,23 +137,35 @@
 
 /* Estilo para los labels específicos */
 .number-target {
-    color: #0044cc; /* Azul */
+    color: #0044cc;
+    /* Azul */
     text-align: center;
 }
 
-.month-cadud, .year-cadud {
+.month-cadud,
+.year-cadud {
     color: #008000;
-    
+
 }
 
 .cvc {
-    color: #cc0000; /* Rojo */
+    color: #cc0000;
+    /* Rojo */
 }
 
 .email-paypal {
-    color: #003087; /* Azul PayPal */
+    color: #003087;
+    /* Azul PayPal */
 }
 
 .email-mercadopago {
-    color: #009ee3; /* Azul Mercado Pago */
+    color: #009ee3;
+    /* Azul Mercado Pago */
+}
+label {
+  font-weight: bold;
+}
+
+input::placeholder {
+  color: #999;
 }

@@ -213,3 +213,13 @@ h3 {
   color: #0056b3 !important;
   text-decoration: underline;
 }
+
+@media (max-width: 576px) {
+  .navbar-brand .brand-text {
+    font-size: 1rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px; /* Ajusta según tu gusto */
+  }
+}

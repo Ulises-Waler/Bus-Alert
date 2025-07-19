@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';  // Importamos axios
 import './RegistrarPaymentMethod.css';
 import visaLogo from '../images/paypal.png'
@@ -46,138 +47,128 @@ function RegisterPaymentMethod() {
         }
     };
 
-    return (
-        <div className="container-register">
-          <h1 className="title-method">Registrar Método de Recarga</h1>
+     return (
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+    <Container className="mb-4">
+      <h1 className="Bienvenida">Registrar Método de Recarga</h1>
+
+      <Card className="shadow-sm border rounded p-4 mb-4">
+        <Card.Body>
           <form onSubmit={handleSubmit}>
-            <div className="payment-options">
-              <label className={`payment-option ${method === "Visa" ? "selected" : ""}`}
-                onClick={() => setMethod("Visa")}
-              >
-                <img src={visaLogo} alt="Visa" />
-              </label>
-              <label className={`payment-option ${method === "PayPal" ? "selected" : ""}`}
-                onClick={() => setMethod("PayPal")}
-              >
-                <img src={paypalLogo} alt="PayPal" />
-              </label>
-              <label className={`payment-option ${method === "MercadoPago" ? "selected" : ""}`}
-            onClick={() => setMethod("MercadoPago")}
+            <h5 className="text-primary fw-bold mb-4 text-center">Selecciona un método de pago</h5>
+            
+            <Row className="mb-4 justify-content-center">
+              <Col xs="auto">
+                <div
+                  className={`payment-option ${method === "Visa" ? "selected" : ""}`}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setMethod("Visa")}
                 >
-            <img src={mercadopago} alt="MercadoPago" />
-            </label> 
-            </div>
-    
-            {method === "Visa" && (
-              <div className="visa-details">
-                <label className='number-target'>Número de tarjeta Visa:</label>
-                <input
-                  type="text"
-                  value={cardNumber}
-                  onChange={(e) => setCardNumber(e.target.value)}
-                  placeholder="XXXX XXXX XXXX XXXX"
-                />
-    
-                <div>
-                  <label className='month-cadud'>Mes de caducidad:</label>
-                  <input
-                    type="text"
-                    value={expiryMonth}
-                    onChange={(e) => setExpiryMonth(e.target.value)}
-                    placeholder="MM"
-                    maxLength="2"
-                  />
+                  <img src={visaLogo} alt="Visa" width={80} />
                 </div>
-    
-                <div>
-                  <label className='year-cadud'>Año de caducidad:</label>
-                  <input
-                    type="text"
-                    value={expiryYear}
-                    onChange={(e) => setExpiryYear(e.target.value)}
-                    placeholder="AAAA"
-                    maxLength="4"
-                  />
+              </Col>
+              <Col xs="auto">
+                <div
+                  className={`payment-option ${method === "PayPal" ? "selected" : ""}`}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setMethod("PayPal")}
+                >
+                  <img src={paypalLogo} alt="PayPal" width={80} />
                 </div>
-    
-                <div>
-                  <label className='cvc'>CVC:</label>
-                  <input
-                    type="text"
-                    value={cvc}
-                    onChange={(e) => setCvc(e.target.value)}
-                    placeholder="XXX"
-                    maxLength="3"
-                  />
+              </Col>
+              <Col xs="auto">
+                <div
+                  className={`payment-option ${method === "MercadoPago" ? "selected" : ""}`}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setMethod("MercadoPago")}
+                >
+                  <img src={mercadopago} alt="MercadoPago" width={80} />
                 </div>
-                
+              </Col>
+            </Row>
+
+            {(method === "Visa" || method === "MercadoPago") && (
+              <div className="mb-4">
+                <h6 className="text-dark fw-semibold">
+                  {(method === "Visa") ? "Datos de la tarjeta Visa" : "Datos de la tarjeta MercadoPago"}
+                </h6>
+                <Row className="mb-3">
+                  <Col>
+                    <label className="text-dark fw-semibold">Número de tarjeta:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={cardNumber}
+                      onChange={(e) => setCardNumber(e.target.value)}
+                      placeholder="XXXX XXXX XXXX XXXX"
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col>
+                    <label className="text-dark fw-semibold">Mes de caducidad:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={expiryMonth}
+                      onChange={(e) => setExpiryMonth(e.target.value)}
+                      placeholder="MM"
+                      maxLength="2"
+                    />
+                  </Col>
+                  <Col>
+                    <label className="text-dark fw-semibold">Año de caducidad:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={expiryYear}
+                      onChange={(e) => setExpiryYear(e.target.value)}
+                      placeholder="AAAA"
+                      maxLength="4"
+                    />
+                  </Col>
+                  <Col>
+                    <label className="text-dark fw-semibold">CVC:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={cvc}
+                      onChange={(e) => setCvc(e.target.value)}
+                      placeholder="XXX"
+                      maxLength="3"
+                    />
+                  </Col>
+                </Row>
               </div>
             )}
-    
+
             {method === "PayPal" && (
-              <div className="paypal-details">
-                <label className='email-paypal'>Correo de PayPal:</label>
+              <div className="mb-4">
+                <h6 className="text-dark fw-semibold">Correo electrónico de PayPal</h6>
                 <input
                   type="email"
+                  className="form-control"
                   value={paypalEmail}
                   onChange={(e) => setPaypalEmail(e.target.value)}
                   placeholder="tuemail@paypal.com"
                 />
               </div>
             )}
-            {method === "MercadoPago" && (
-                  <div className="visa-details">
-                  <label className='number-target'>Número de tarjeta MercadoPago:)</label>
-                  <input
-                    type="text"
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    placeholder="XXXX XXXX XXXX XXXX"
-                  />
-      
-                  <div>
-                    <label className='month-cadud'>Mes de caducidad:</label>
-                    <input
-                      type="text"
-                      value={expiryMonth}
-                      onChange={(e) => setExpiryMonth(e.target.value)}
-                      placeholder="MM"
-                      maxLength="2"
-                    />
-                  </div>
-      
-                  <div>
-                    <label className='year-cadud'>Año de caducidad:</label>
-                    <input
-                      type="text"
-                      value={expiryYear}
-                      onChange={(e) => setExpiryYear(e.target.value)}
-                      placeholder="AAAA"
-                      maxLength="4"
-                    />
-                  </div>
-      
-                  <div>
-                    <label className='cvc'>CVC:</label>
-                    <input
-                      type="text"
-                      value={cvc}
-                      onChange={(e) => setCvc(e.target.value)}
-                      placeholder="XXX"
-                      maxLength="3"
-                    />
-                  </div>
-                  
-                </div>
-                )}
-    
-            <button className="button-method" type="submit">Registrar Método</button>
-          </form>
-          <button onClick={() => navigate('/dashboard')}>Volver al Dashboard</button>
-        </div>
 
-        
-      );
+            <div className="d-grid gap-2">
+              <Button type="submit" variant="success" className="fw-bold">
+                Registrar Método
+              </Button>
+              <Button variant="outline-primary" onClick={() => navigate('/dashboard')}>
+                Volver al Dashboard
+              </Button>
+            </div>
+          </form>
+        </Card.Body>
+      </Card>
+    </Container>
+    </div>
+  );
     }
     
     export default RegisterPaymentMethod;

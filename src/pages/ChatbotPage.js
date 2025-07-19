@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Button, Form } from 'react-bootstrap';
+import { Container, Button, Form, Card } from 'react-bootstrap';
 import './ChatbotPage.css'
 import { useNavigate  } from 'react-router-dom';
 
@@ -67,56 +67,60 @@ function ChatbotPage() {
     };
 
     return (
-        <Container style={{ maxWidth: '600px', marginTop: '20px' }}>
-            <h2>Chatbot de Soporte</h2>
-            <div style={{ height: '400px', overflowY: 'scroll', border: '1px solid #ddd', padding: '10px' }}>
-                {messages.map((message, index) => (
-                    <div key={index} style={{ marginBottom: '10px' }}>
-                        <strong>{message.sender === 'bot' ? 'Bot: 🤖' : 'Tú: 🧑‍💻'}</strong>
-                        <p>{message.text}</p>
-                    </div>
-                ))}
+        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+    <Container className="mb-5" style={{ maxWidth: '700px', marginTop: '40px' }}>
+      <h1 className="Bienvenida">Chatbot de Soporte</h1>
+
+      <Card className="shadow-sm border rounded mb-4">
+        <Card.Body style={{ height: '400px', overflowY: 'scroll', backgroundColor: '#f9f9f9' }}>
+          {messages.map((message, index) => (
+            <div key={index} className="mb-3">
+              <strong className="text-primary">{message.sender === 'bot' ? '🤖 Bot:' : '🧑‍💻 Tú:'}</strong>
+              <p className="text-dark fw-semibold">{message.text}</p>
             </div>
+          ))}
+        </Card.Body>
+      </Card>
 
-            {/* Opciones del bot cuando se le pregunta por ayuda */}
-            {(messages.length === 1 || messages[messages.length - 1].sender === 'bot') && (
-                <div style={{ marginTop: '10px' }}>
-                    <Button className="button-saldo" variant="light" onClick={() => handleOptionClick('saldo')}>
-                        Consultar Saldo
-                    </Button>{' '}
-                    <Button className="button-movimientos"  variant="light" onClick={() => handleOptionClick('movimientos')}>
-                        Ver Movimientos
-                    </Button>{' '}
-                    <Button className="button-reporte"   variant="light" onClick={() => handleOptionClick('reporte')}>
-                        Reporte
-                    </Button>{' '}
-                    <Button className="button-tramites"   variant="light" onClick={() => handleOptionClick('tramites')}>
-                        Trámites
-                    </Button>
-                </div>
-            )}
+      {(messages.length === 1 || messages[messages.length - 1].sender === 'bot') && (
+        <div className="mb-4 text-center d-flex flex-wrap gap-2 justify-content-center">
+          <Button variant="outline-primary" onClick={() => handleOptionClick('saldo')}>
+            Consultar Saldo
+          </Button>
+          <Button variant="outline-secondary" onClick={() => handleOptionClick('movimientos')}>
+            Ver Movimientos
+          </Button>
+          <Button variant="outline-danger" onClick={() => handleOptionClick('reporte')}>
+            Reporte
+          </Button>
+          <Button variant="outline-success" onClick={() => handleOptionClick('tramites')}>
+            Trámites
+          </Button>
+        </div>
+      )}
 
-            {/* Campo de texto para mensaje personalizado */}
-            <Form onSubmit={handleSendMessage} style={{ marginTop: '20px' }}>
-                <Form.Group controlId="userMessage">
-                    <Form.Control
-                        type="text"
-                        value={userInput}
-                        onChange={(e) => setUserInput(e.target.value)}
-                        placeholder="Escribe un mensaje..."
-                    />
-                </Form.Group>
-                <div>
-                <Button className="button-enviar" variant="primary" type="submit" style={{ marginTop: '10px' }}>
-                    Enviar
-                </Button>
-                <button onClick={() => navigate('/dashboard')}>Volver al Dashboard</button>
+      <Form onSubmit={handleSendMessage}>
+        <Form.Group controlId="userMessage">
+          <Form.Control
+            type="text"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            placeholder="Escribe un mensaje..."
+          />
+        </Form.Group>
 
-                </div>
-
-            </Form>
-        </Container>
-    );
+        <div className="mt-3 d-flex justify-content-between">
+          <Button variant="primary" type="submit">
+            Enviar
+          </Button>
+          <Button variant="outline-secondary" onClick={() => navigate('/dashboard')}>
+            Volver al Dashboard
+          </Button>
+        </div>
+      </Form>
+    </Container>
+    </div>
+  );
 }
 
 export default ChatbotPage;
